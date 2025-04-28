@@ -19,7 +19,7 @@ enum TokenType {
     NOT = "!",
 
     INT = "INT",
-    IDEMT = "IDENT",
+    IDENT = "IDENT",
 
     ASSIGN = "="
 }
