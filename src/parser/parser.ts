@@ -45,14 +45,14 @@ class Parser {
         this.nextToken()
     }
 
-    parseNext(precedance: Precedance = Precedance.LOWEST): Expression | null {
+    parseNext(precedance: Precedance = Precedance.LOWEST): Expression {
         this.nextToken()
         log.info("PARSER: Parsing", this.currToken)  
         
         const prefix = this.prefixFunctions.get(this.currToken.type)
         if (!prefix) {
             log.warn("PARSER: No prefix function found for", this.currToken)
-            return null
+            throw new Error("Syntax error in expression")
         }
         log.info("PARSER: Prefix function found for", this.currToken)
         let left = prefix.bind(this)()
