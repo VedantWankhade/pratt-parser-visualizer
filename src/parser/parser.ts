@@ -26,6 +26,9 @@ class Parser {
     private lexer: Lexer
     private currToken!: Token;
     private peekToken!: Token;
+
+    frames: string[][]
+
     private prefixFunctions: Map<TokenType, prefixFunction> = new Map<TokenType, prefixFunction>([
         [TokenType.IDENT, this.parseIdentifier],
         [TokenType.INT, this.parseIdentifier], // integer is parsed the same ways as ident
@@ -42,12 +45,20 @@ class Parser {
 
     constructor(lexer: Lexer) {
         this.lexer = lexer
+        this.frames = [[]]
         this.nextToken()
+    }
+
+    private record(msg: string): void {
+        const prev = [...this.frames[this.frames.length - 1]]
+        prev.push(msg)
+        this.frames.push(prev)
     }
 
     parseNext(precedance: Precedance = Precedance.LOWEST): Expression {
         this.nextToken()
         log.info("PARSER: Parsing", this.currToken)  
+        this.record("Parsing token: " + this.currToken.literal)
         
         const prefix = this.prefixFunctions.get(this.currToken.type)
         if (!prefix) {
@@ -57,7 +68,7 @@ class Parser {
         log.info("PARSER: Prefix function found for", this.currToken)
         let left = prefix.bind(this)()
         log.info("PARSER: Left expression is:", left.toString())
-
+        this.record("Left expression is: " + left.toString())
         while (precedance < this.peekPrecedance()) {
             const infix = this.infixFunctions.get(this.peekToken.type)
             if (!infix) {
@@ -69,6 +80,7 @@ class Parser {
             left = infix.bind(this)(left)
         }
         log.info("PARSER: The expression is:", left.toString())
+        this.record("Actual expression is: " + left.toString())
         return left
     }
 
@@ -85,7 +97,9 @@ class Parser {
 
     private parseInfixExpression(left: Expression): Expression {
         const currToken = this.currToken
+        this.record("Parsing token: " + this.currToken.literal)
         const right = this.parseNext(this.curPrecedance())!
+        this.record("Right expression is: " + right.toString())
         log.info("PARSER: Right expression is:", right.toString())
         return new InfixExpression(this.currToken, currToken.literal, left, right)
     }
