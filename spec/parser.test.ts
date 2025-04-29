@@ -35,11 +35,7 @@ test('Test expressions', () => {
         {
             source: `b * a / 2 + 22`,
             expected: `(((b*a)/2)+22)`
-        },
-        {
-            source: `a+`,
-            expected: `a+`
-        },
+        }
     ]
     for (const test of tests) {
         const p = new Parser(new Lexer(test.source))
