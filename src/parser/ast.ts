@@ -2,7 +2,6 @@ import { Token } from "./tokens"
 
 interface Expression {
     tokenLiteral(): string
-    value: Expression | string
     token: Token
     toString(): string
 }
@@ -50,4 +49,33 @@ class PrefixExpression implements Expression {
     }
 }
 
-export { type Expression, Identifier, PrefixExpression }
+class InfixExpression implements Expression {
+    token: Token
+    operator: string
+    left: Expression
+    right: Expression;
+    
+    constructor(token: Token, operator: string, left: Expression, right: Expression) {
+        this.token = token
+        this.right = right
+        this.left = left
+        this.operator = operator
+    }
+
+    tokenLiteral(): string {
+        return this.token.literal
+    }
+
+    toString(): string {
+        const buf: string[] = []
+        buf.push('(')
+        buf.push(this.left.toString())
+        buf.push(this.operator)
+        buf.push(this.right.toString())
+        buf.push(')')
+        return buf.join('')
+    }
+}
+
+
+export { type Expression, Identifier, PrefixExpression, InfixExpression }

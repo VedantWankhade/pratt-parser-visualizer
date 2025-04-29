@@ -1,7 +1,7 @@
 import { log } from "../utils/utils";
 import Lexer from "./lexer";
 import { Token, TokenType } from "./tokens";
-import { Expression, Identifier, PrefixExpression } from './ast'
+import { Expression, Identifier, InfixExpression, PrefixExpression } from './ast'
 
 enum Precedance {
     LOWEST,
@@ -16,6 +16,7 @@ const precedance: Map<TokenType, Precedance> = new Map<TokenType, Precedance>([
     [TokenType.MINUS, Precedance.SUM],
     [TokenType.SLASH, Precedance.PRODUCT],
     [TokenType.ASTERISK, Precedance.PRODUCT],
+    [TokenType.MOD, Precedance.PRODUCT],
 ])
 
 type prefixFunction = () => Expression
@@ -27,9 +28,16 @@ class Parser {
     private peekToken!: Token;
     private prefixFunctions: Map<TokenType, prefixFunction> = new Map<TokenType, prefixFunction>([
         [TokenType.IDENT, this.parseIdentifier],
+        [TokenType.INT, this.parseIdentifier], // integer is parsed the same ways as ident
         [TokenType.PLUS, this.parsePrefixExpression],
+        [TokenType.MINUS, this.parsePrefixExpression],
     ]) 
     private infixFunctions: Map<TokenType, infixFunction> = new Map<TokenType, infixFunction>([
+        [TokenType.PLUS, this.parseInfixExpression],
+        [TokenType.MINUS, this.parseInfixExpression],
+        [TokenType.ASTERISK, this.parseInfixExpression],
+        [TokenType.SLASH, this.parseInfixExpression],
+        [TokenType.MOD, this.parseInfixExpression],
     ]) 
 
     constructor(lexer: Lexer) {
@@ -58,7 +66,7 @@ class Parser {
             }
             log.info("PARSER: Inifx function found for", this.peekToken)
             this.nextToken()
-            left = infix(left)
+            left = infix.bind(this)(left)
         }
         log.info("PARSER: The expression is:", left.toString())
         return left
@@ -70,8 +78,20 @@ class Parser {
 
     private parsePrefixExpression(): Expression {
         const curTok = this.currToken
-        const val = this.parseNext(Precedance.PREFIX)
+        const val = this.parseNext(Precedance.PREFIX)!
+        log.info("PARSER: Right expression is:", val.toString())
         return new PrefixExpression(curTok, curTok.literal, val!)
+    }
+
+    private parseInfixExpression(left: Expression): Expression {
+        const currToken = this.currToken
+        const right = this.parseNext(this.curPrecedance())!
+        log.info("PARSER: Right expression is:", right.toString())
+        return new InfixExpression(this.currToken, currToken.literal, left, right)
+    }
+
+    private curPrecedance(): Precedance {
+        return precedance.get(this.currToken.type)!
     }
 
     private nextToken(): void {
