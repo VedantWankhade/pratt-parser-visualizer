@@ -1,6 +1,7 @@
 import React, { useState } from "react"
 import { Button } from "./ui/button"
 import { Call } from "./Call"
+import { ScrollArea } from "./ui/scroll-area"
 
 interface FramesProps {
     frames: string[][]
@@ -14,7 +15,11 @@ const Frames: React.FC<FramesProps> = ({frames}) => {
             <Button className="mr-2 cursor-pointer" name="next" onClick={() => advanceFrame(frame < frames.length - 1 ? + frame + 1: frame)}>Next</Button>
             <Button className="cursor-pointer" name="prev" onClick={() => advanceFrame(frame > 0 ? + frame - 1: frame)}>Prev</Button>
             </div>
+            <ScrollArea className='h-[80%]'>
+            <div>
         {frames[frame].map((f, i) => <Call log={f} key={i} />)}
+        </div>
+        </ ScrollArea>
     </div>
 }
 

@@ -9,7 +9,7 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './componen
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className='flex flex-col min-h-screen p-6'>
+      <div className='flex flex-col h-dvh p-6'>
         <header className='sticky top-0'>
           <Nav />
         </header>
