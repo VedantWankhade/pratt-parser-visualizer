@@ -1,7 +1,7 @@
 import Lexer from "../parser/lexer"
 import { Parser } from "../parser/parser"
 import { parse } from "../utils/utils"
-import Frames from "./frames"
+import Frames from "./Frames"
 
 function ParserCallStack({exp}: {exp: string}) {
 

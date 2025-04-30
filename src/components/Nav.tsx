@@ -1,3 +1,5 @@
+import { ModeToggle } from "./mode-toggle"
+
 function Nav() {
    return  <nav>
     <div>
@@ -6,6 +8,7 @@ function Nav() {
     <div>
         <a href="">Project Link</a>
     </div>
+    <ModeToggle />
 </nav>
 }
 
