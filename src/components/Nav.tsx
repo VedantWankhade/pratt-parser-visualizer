@@ -5,7 +5,7 @@ import { Button } from "./ui/button"
 function Nav() {
    return  <nav className="flex justify-between mb-4">
         <div>
-            <a href="">Pratt Parser</a>
+            <a href=""><h1 className="mb-4 scroll-m-20 pb-2 text-4xl font-bold tracking-tight first:mt-0">Pratt Parser</h1></a>
         </div>
         <div>
         <ul className="flex justify-center gap-4">
