@@ -1,5 +1,5 @@
 function AST() {
-    return <div>AST</div>
+    return <div className='ml-4'>AST</div>
 }
 
 export default AST

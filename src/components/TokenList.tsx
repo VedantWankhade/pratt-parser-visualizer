@@ -6,11 +6,13 @@ interface TokenListProps {
 }
 
 const TokenList: React.FC<TokenListProps> = ({tokens}) => {
-    return <div>
+    return <div className="flex mb-4">
+        <div className="mr-6">
         Tokens
-        <ol>
+        </div>
+        <div className="flex">
             {tokens.map((token, i) => <Token key={i} {...token} />)}
-        </ol>
+        </div>
     </div>
 }
 
