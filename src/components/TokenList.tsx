@@ -6,7 +6,7 @@ interface TokenListProps {
 }
 
 const TokenList: React.FC<TokenListProps> = ({tokens}) => {
-    return <div className="flex mb-4">
+    return <div className="flex mb-6">
         <div className="mr-6">
         Tokens
         </div>

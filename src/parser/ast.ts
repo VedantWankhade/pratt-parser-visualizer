@@ -69,8 +69,8 @@ class InfixExpression implements Expression {
     toString(): string {
         const buf: string[] = []
         buf.push('(')
-        buf.push(this.left.toString())
-        buf.push(this.operator)
+        buf.push(this.left.toString() + ' ')
+        buf.push(this.operator + ' ')
         buf.push(this.right.toString())
         buf.push(')')
         return buf.join('')
