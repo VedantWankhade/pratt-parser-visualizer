@@ -1,21 +1,17 @@
+import React from "react"
 import Lexer from "../parser/lexer"
 import { Parser } from "../parser/parser"
 import Frames from "./Frames"
 
-function ParserCallStack({exp}: {exp: string}) {
+interface ParserCallStackProps {
+    parsed: any
+    render: any
+    frames: any
+}
 
-    const parser = new Parser(new Lexer(exp))
-    let parsed 
-    let render
-    let frames 
-    try {
-        parsed = parser.parseNext().toString()
-        frames = parser.frames
-        console.log(frames)
-        render = <Frames frames={frames}/>
-    } catch(e: any) {
-        parsed = e.message || String(e)
-    }
+const ParserCallStack: React.FC<ParserCallStackProps> = ({parsed, render, frames}) => {
+
+    
 
     return <div>
         <h2 className="mb-4 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">Call Stack</h2>
