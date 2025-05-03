@@ -1,14 +1,15 @@
 import { Expression } from "@/parser/ast"
 import React from "react"
+import ASTCanvas from "./ASTCanvas"
 
 interface ASTProps {
-    expr: Expression
+    astFrames: Expression[]
 }
 
-const AST: React.FC<ASTProps> = ({expr}) => {
+const AST: React.FC<ASTProps> = ({astFrames}) => {
     return <div className='ml-4'>
         <h2 className="mb-4 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">AST</h2>
-       { expr && <p>{expr.toString()}</p>}
+       { astFrames && <ASTCanvas height={250} width={250} astFrames={astFrames} />}
     </div>
 }
 

@@ -26,7 +26,7 @@ class Parser {
     private lexer: Lexer
     private currToken!: Token;
     private peekToken!: Token;
-
+    astFrames: Expression[]
     frames: string[][]
 
     private prefixFunctions: Map<TokenType, prefixFunction> = new Map<TokenType, prefixFunction>([
@@ -46,7 +46,12 @@ class Parser {
     constructor(lexer: Lexer) {
         this.lexer = lexer
         this.frames = [[]]
+        this.astFrames = []
         this.nextToken()
+    }
+
+    private recordAST(expr: Expression): void {
+        this.astFrames.push(expr)
     }
 
     private record(msg: string): void {
@@ -81,6 +86,7 @@ class Parser {
         }
         log.info("PARSER: The expression is:", left.toString())
         this.record("Actual expression is: " + left.toString())
+        this.recordAST(left)
         return left
     }
 

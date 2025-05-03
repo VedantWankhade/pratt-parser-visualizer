@@ -5,12 +5,6 @@ interface CallProps {
 }
 
 const Call: React.FC<CallProps> = (props) => {
-//    return <Card className="mb-2">
-//   <CardContent>
-//     <p>{props.log}</p>
-//   </CardContent>
-// </Card>
-
 return (
 
     <Card className="mb-2">

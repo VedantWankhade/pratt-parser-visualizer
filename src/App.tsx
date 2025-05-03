@@ -15,13 +15,14 @@ function App() {
   const parser = new ParserCore(new Lexer(exp))
     let parsed 
     let render
-    let frames 
+    let frames
+    let astFrames
     let expr
     try {
         expr = parser.parseNext()
         parsed = expr.toString()
         frames = parser.frames
-        // console.log(frames)
+        astFrames = parser.astFrames
         render = <Frames frames={frames}/>
     } catch(e: any) {
         parsed = e.message || String(e)
@@ -37,11 +38,10 @@ function App() {
           <ResizablePanelGroup direction="horizontal">
             <ResizablePanel><Parser render={render} frames={frames} parsed={parsed} exp={exp} setExp={setExp} /></ResizablePanel>
             <ResizableHandle />
-            <ResizablePanel><AST expr={expr!} /></ResizablePanel>
+            <ResizablePanel><AST astFrames={astFrames!} /></ResizablePanel>
           </ResizablePanelGroup>
         </main>
       </div>
-
       </ThemeProvider>
   ) 
 }

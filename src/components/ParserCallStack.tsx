@@ -10,9 +10,6 @@ interface ParserCallStackProps {
 }
 
 const ParserCallStack: React.FC<ParserCallStackProps> = ({parsed, render, frames}) => {
-
-    
-
     return <div>
         <h2 className="mb-4 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">Call Stack</h2>
         {parsed && 
