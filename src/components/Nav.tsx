@@ -1,4 +1,4 @@
-import { Github, Sun } from "lucide-react"
+import { Github } from "lucide-react"
 import { ModeToggle } from "./mode-toggle"
 import { Button } from "./ui/button"
 

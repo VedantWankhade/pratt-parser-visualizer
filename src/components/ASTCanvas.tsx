@@ -6,8 +6,6 @@ interface ASTCanvasProps {
     astFrames: Expression[]
 }
 
-let currentX = 0;
-
 function computePositions(
     expr: Expression,
     depth: number = 0,
@@ -112,11 +110,11 @@ const ASTCanvas: React.FC<ASTCanvasProps> = ({astFrames}) => {
     const canvasRef = useRef(null)
     useEffect(() => {
         const canvas = canvasRef.current
-        const convasCtx = canvas.getContext('2d')
+        const convasCtx = (canvas! as HTMLCanvasElement).getContext('2d')
         // console.log(f.toString())
         // drawASTNode(convasCtx, f)
         const positions = computePositions(f, 0, { value: 0 }, new Map(), 80, 120);
-        drawAST(convasCtx, f, positions);
+        drawAST(convasCtx!, f, positions);
     }, [])
 
     return (

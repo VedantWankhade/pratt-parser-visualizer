@@ -1,7 +1,4 @@
 import React from "react"
-import Lexer from "../parser/lexer"
-import { Parser } from "../parser/parser"
-import Frames from "./Frames"
 
 interface ParserCallStackProps {
     parsed: any
@@ -9,7 +6,7 @@ interface ParserCallStackProps {
     frames: any
 }
 
-const ParserCallStack: React.FC<ParserCallStackProps> = ({parsed, render, frames}) => {
+const ParserCallStack: React.FC<ParserCallStackProps> = ({parsed, render}) => {
     return <div>
         <h2 className="mb-4 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0">Call Stack</h2>
         {parsed && 
